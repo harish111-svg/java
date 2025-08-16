@@ -1,0 +1,38 @@
+
+package hello;
+
+class Author {
+    private String name;
+    private String biography;
+
+    Author(String name, String biography) {
+        this.name = name;
+        this.biography = biography;
+    }
+
+    public void updateBiography(String bio) {
+        this.biography = bio;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static void main(String[] args) {
+        Author a = new Author("George Orwell", "English novelist and essayist.");
+        System.out.println("S .Harish Kumar");
+        System.out.println("2117240070111");
+
+        System.out.println("Author: " + a.getName());
+        System.out.println("Biography: " + a.getBiography());
+
+        a.updateBiography("Known for '1984' and 'Animal Farm'.");
+        System.out.println("Updated Biography: " + a.getBiography());
+        
+       
+    }
+}
