@@ -1,0 +1,44 @@
+import java.util.concurrent.*;
+import java.util.*;
+class AsyncTask implements Callable<String> {
+    private String taskName;
+
+    public AsyncTask(String taskName) {
+        this.taskName = taskName;
+    }
+
+    @Override
+    public String call() throws Exception {
+        System.out.println(taskName + " started...");
+        Thread.sleep(new Random().nextInt(2000) + 500); 
+        if (new Random().nextBoolean()) {
+            return taskName + " completed successfully!";
+        } else {
+            throw new Exception(taskName + " encountered an error!");
+        }
+    }
+}
+
+public class AsyncIOSimulation {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        List<Future<String>> futures = new ArrayList<>();
+
+        futures.add(executor.submit(new AsyncTask("Task 1")));
+        futures.add(executor.submit(new AsyncTask("Task 2")));
+        futures.add(executor.submit(new AsyncTask("Task 3")));
+        futures.add(executor.submit(new AsyncTask("Task 4")));
+        for (Future<String> future : futures) {
+            try {
+                String result = future.get();
+                System.out.println("Callback Success: " + result);
+            } catch (ExecutionException e) {
+                System.out.println("Callback Failure: " + e.getCause().getMessage());
+            } catch (InterruptedException e) {
+
+             System.out.println("Callback Interrupted: " + e.getMessage());
+            }
+        }
+        executor.shutdown();
+    }
+}
